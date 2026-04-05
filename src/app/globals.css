@@ -1,26 +1,162 @@
 @import "tailwindcss";
 
+/*
+  Design tokens — Figma COLOR STYLES + TYPE STYLES + COMPONENTS (LMS / Apon-Frontend).
+  HSB → sRGB hex per Figma. Default theme matches dark UI from components frame.
+*/
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Primary (H 220°) */
+  --primary-50: #e8f0ff;
+  --primary-100: #c9dbff;
+  --primary-200: #a8c5ff;
+  --primary-300: #7da8ff;
+  --primary-400: #528bff;
+  --primary-500: #266fff;
+  --primary-600: #1858d9;
+  --primary-700: #1b4db3;
+  --primary-800: #193c80;
+  --primary-900: #081f4d;
+  --primary-950: #051026;
+
+  /* Neutral */
+  --neutral-0: #ffffff;
+  --neutral-50: #f0f3f5;
+  --neutral-100: #dfe2e6;
+  --neutral-200: #d0d5d9;
+  --neutral-300: #a8adb3;
+  --neutral-400: #80868c;
+  --neutral-500: #52575e;
+  --neutral-600: #30343b;
+  --neutral-700: #171b21;
+  --neutral-800: #101217;
+  --neutral-900: #080a0d;
+  --neutral-950: #000000;
+
+  --alpha-white-30: rgb(255 255 255 / 0.3);
+  --alpha-blue-0: rgb(255 255 255 / 0);
+  --alpha-gray-30: rgb(255 255 255 / 0.3);
+  --alpha-blue-15: rgb(255 255 255 / 0.15);
+  --alpha-black-20: rgb(0 0 0 / 0.2);
+
+  --red-500: #ff2626;
+
+  --gradient-glow-line-horizontal: linear-gradient(
+    90deg,
+    rgb(38 111 255 / 0) 0%,
+    rgb(38 111 255 / 0.55) 50%,
+    rgb(38 111 255 / 0) 100%
+  );
+  --gradient-glow-line-vertical: linear-gradient(
+    180deg,
+    rgb(38 111 255 / 0) 0%,
+    rgb(38 111 255 / 0.55) 50%,
+    rgb(38 111 255 / 0) 100%
+  );
+  --gradient-glow-reflect-sm: radial-gradient(
+    60% 40% at 50% 100%,
+    rgb(38 111 255 / 0.35) 0%,
+    rgb(38 111 255 / 0) 70%
+  );
+  --gradient-glow-reflect-md: radial-gradient(
+    80% 55% at 50% 100%,
+    rgb(38 111 255 / 0.4) 0%,
+    rgb(82 139 255 / 0.12) 45%,
+    rgb(38 111 255 / 0) 72%
+  );
+  --gradient-glow-reflect-lg: radial-gradient(
+    100% 70% at 50% 110%,
+    rgb(38 111 255 / 0.45) 0%,
+    rgb(125 168 255 / 0.15) 40%,
+    rgb(38 111 255 / 0) 75%
+  );
+
+  /* Typography — SF Pro via system stack */
+  --font-sans-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "SF Pro Text", ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue",
+    Helvetica, Arial, sans-serif;
+
+  /* LMS dark shell (components frame) */
+  --background: #0a0a0a;
+  --foreground: var(--neutral-0);
+  --card: #171717;
+  --border: rgb(255 255 255 / 0.12);
+  --muted: var(--neutral-400);
 }
 
 @theme inline {
+  --color-primary-50: var(--primary-50);
+  --color-primary-100: var(--primary-100);
+  --color-primary-200: var(--primary-200);
+  --color-primary-300: var(--primary-300);
+  --color-primary-400: var(--primary-400);
+  --color-primary-500: var(--primary-500);
+  --color-primary-600: var(--primary-600);
+  --color-primary-700: var(--primary-700);
+  --color-primary-800: var(--primary-800);
+  --color-primary-900: var(--primary-900);
+  --color-primary-950: var(--primary-950);
+
+  --color-neutral-0: var(--neutral-0);
+  --color-neutral-50: var(--neutral-50);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-300: var(--neutral-300);
+  --color-neutral-400: var(--neutral-400);
+  --color-neutral-500: var(--neutral-500);
+  --color-neutral-600: var(--neutral-600);
+  --color-neutral-700: var(--neutral-700);
+  --color-neutral-800: var(--neutral-800);
+  --color-neutral-900: var(--neutral-900);
+  --color-neutral-950: var(--neutral-950);
+
+  --color-alpha-white-30: var(--alpha-white-30);
+  --color-alpha-blue-0: var(--alpha-blue-0);
+  --color-alpha-gray-30: var(--alpha-gray-30);
+  --color-alpha-blue-15: var(--alpha-blue-15);
+  --color-alpha-black-20: var(--alpha-black-20);
+
+  --color-red-500: var(--red-500);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background-image-glow-line-horizontal: var(--gradient-glow-line-horizontal);
+  --background-image-glow-line-vertical: var(--gradient-glow-line-vertical);
+  --background-image-glow-reflect-sm: var(--gradient-glow-reflect-sm);
+  --background-image-glow-reflect-md: var(--gradient-glow-reflect-md);
+  --background-image-glow-reflect-lg: var(--gradient-glow-reflect-lg);
+
+  --font-sans: var(--font-sans-display);
+  --font-mono: var(--font-geist-mono);
+
+  --text-heading-1: 3.25rem;
+  --text-heading-1--line-height: 1.15;
+  --text-heading-2: 2.5rem;
+  --text-heading-2--line-height: 1.15;
+  --text-heading-3: 1.75rem;
+  --text-heading-3--line-height: 1.15;
+  --text-heading-4: 1.5rem;
+  --text-heading-4--line-height: 1.35;
+  --text-heading-5: 1.25rem;
+  --text-heading-5--line-height: 1.35;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.35;
+  --text-body-sm: 0.9375rem;
+  --text-body-sm--line-height: 1.35;
+
+  /* Component radius (Figma ~8–16px) */
+  --radius-ui-sm: 0.5rem;
+  --radius-ui-md: 0.75rem;
+  --radius-ui-lg: 1rem;
+  --radius-pill: 624.9375rem;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans-display), ui-sans-serif, system-ui, sans-serif;
 }
