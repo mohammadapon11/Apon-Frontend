@@ -1,5 +1,11 @@
 import { cn } from "@/lib/utils";
-import type { ComponentProps } from "react";
+import {
+  Children,
+  cloneElement,
+  isValidElement,
+  type ComponentProps,
+  type ReactElement,
+} from "react";
 
 const base =
   "inline-flex shrink-0 cursor-pointer items-center justify-center font-medium transition-colors " +
@@ -25,6 +31,7 @@ const sizes = {
 export type ButtonProps = ComponentProps<"button"> & {
   variant?: keyof typeof variants;
   size?: keyof typeof sizes;
+  asChild?: boolean;
 };
 
 export function Button({
@@ -32,13 +39,26 @@ export function Button({
   variant = "primary",
   size = "md",
   type = "button",
+  asChild = false,
+  children,
   ...props
 }: ButtonProps) {
+  const classes = cn(base, variants[variant], sizes[size], className);
+
+  if (asChild) {
+    const child = Children.only(children);
+    if (!isValidElement(child)) {
+      throw new Error("Button with asChild expects a single React element child.");
+    }
+    const el = child as ReactElement<{ className?: string }>;
+    return cloneElement(el, {
+      className: cn(classes, el.props.className),
+    });
+  }
+
   return (
-    <button
-      type={type}
-      className={cn(base, variants[variant], sizes[size], className)}
-      {...props}
-    />
+    <button type={type} className={classes} {...props}>
+      {children}
+    </button>
   );
 }

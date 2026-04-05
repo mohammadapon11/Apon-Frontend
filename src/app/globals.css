@@ -71,10 +71,13 @@
     rgb(38 111 255 / 0) 75%
   );
 
-  /* Typography — SF Pro via system stack */
+  /* Typography — Figma Type/Font Family/Primary (SF Pro system stack) */
   --font-sans-display: -apple-system, BlinkMacSystemFont, "SF Pro Display",
     "SF Pro Text", ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue",
     Helvetica, Arial, sans-serif;
+
+  /* Figma Body/SM base: 15px, 400, 135% line-height, 0 tracking */
+  --font-body-sm-size: 0.9375rem;
 
   /* LMS dark shell (components frame) */
   --background: #0a0a0a;
@@ -82,6 +85,15 @@
   --card: #171717;
   --border: rgb(255 255 255 / 0.12);
   --muted: var(--neutral-400);
+}
+
+/* Page theme: navbar stays black; only main content follows these tokens. */
+[data-page-theme="light"] {
+  --background: var(--neutral-0);
+  --foreground: var(--neutral-900);
+  --card: var(--neutral-50);
+  --border: rgb(0 0 0 / 0.1);
+  --muted: var(--neutral-500);
 }
 
 @theme inline {
@@ -159,4 +171,23 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans-display), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--font-body-sm-size);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.35;
+  letter-spacing: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Navbar gradient border with backdrop blur */
+.navbar-gradient-border {
+  border-bottom: 1px solid;
+  border-image-source: linear-gradient(
+    90deg,
+    rgba(36, 102, 242, 0) 0%,
+    #2466f2 50%,
+    rgba(36, 102, 242, 0) 100%
+  );
+  border-image-slice: 1;
+  backdrop-filter: blur(8px);
 }
