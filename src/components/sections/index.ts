@@ -1,0 +1,8 @@
+export { BadgeCountdown } from "./badge-countdown";
+export { PlayButtonIcon } from "./play-button-icon";
+export { HeroSection } from "./hero-section";
+export { DistractionsSection } from "./distractions-section";
+export { NoWorriesSection } from "./no-worries-section";
+export { DeepWorkBlueprintSection } from "./deep-work-blueprint-section";
+export { CurriculumSection } from "./curriculum-section";
+export { TestimonialsSection } from "./testimonials-section";

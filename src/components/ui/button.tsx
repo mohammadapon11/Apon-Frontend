@@ -17,9 +17,9 @@ const variants = {
   primary:
     "border border-transparent bg-primary-500 text-neutral-0 hover:bg-primary-600 active:bg-primary-700",
   secondary:
-    "border border-border bg-neutral-900 text-neutral-0 hover:bg-neutral-800 active:bg-neutral-700",
+    "border border-transparent bg-[#171B21] text-neutral-0 hover:bg-neutral-700 active:bg-neutral-600",
   outline:
-    "border border-neutral-0 bg-transparent text-neutral-0 hover:bg-alpha-white-30 active:bg-alpha-blue-15",
+    "border-0 bg-transparent text-primary-400 hover:text-primary-300 active:text-primary-500 font-medium",
 } as const;
 
 const sizes = {

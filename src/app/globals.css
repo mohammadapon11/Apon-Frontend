@@ -191,3 +191,15 @@ body {
   border-image-slice: 1;
   backdrop-filter: blur(8px);
 }
+
+.deep-work-gradient-border {
+  border-left: 2px solid;
+  border-image-source: linear-gradient(
+    180deg,
+    rgba(36, 102, 242, 0) 0%,
+    #2466f2 50%,
+    rgba(36, 102, 242, 0) 100%
+  );
+  border-image-slice: 1;
+  backdrop-filter: blur(8px);
+}
