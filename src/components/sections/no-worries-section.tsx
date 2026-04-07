@@ -7,6 +7,23 @@ import { usePageTheme } from '@/providers/theme-context';
 
 interface NoWorriesSectionProps {}
 
+function BadgeWrapper({ children }: { children: React.ReactNode }) {
+  const { theme } = usePageTheme();
+  const isLightTheme = theme === "light";
+  return (
+    <div
+      className={`px-4 py-2 flex items-center gap-2 rounded-[12px] text-sm font-medium ${
+        isLightTheme
+          ? "bg-blue-100 text-neutral-700 border border-blue-300"
+          : "bg-gray-900 text-neutral-100 border border-blue-500/30"
+      }`}
+    >
+      <div className="h-2 w-2 bg-blue-600 rounded-full"></div>{children}
+    </div>
+  );
+}
+
+
 export function NoWorriesSection({}: NoWorriesSectionProps) {
   const { theme } = usePageTheme();
   const isLightTheme = theme === 'light';
@@ -95,18 +112,18 @@ export function NoWorriesSection({}: NoWorriesSectionProps) {
   return (
     <section
       ref={containerRef}
-      className={`relative w-full px-6 md:px-12 lg:px-20 ${
+      className={`relative w-full lg:block desktop:px-0 tablet-lg:px-7 tablet:px-5 px-4 ${
         isLightTheme ? 'bg-white' : 'bg-[#0a0a0a]'
       }`}
     >
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-stretch">
+        <div className="flex flex-col lg:flex-row gap-8 desktop:gap-4 items-stretch">
           {/* Left - Large Image (Full Height) */}
           <div
             ref={leftImageRef}
-            className="lg:w-[40%] flex-shrink-0 h-96 lg:h-auto"
+            className="lg:w-[40%] shrink-0 h-96 lg:h-auto desktop:block hidden"
           >
-            <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border-2 border-blue-500">
+            <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl">
               <Image
                 src="/images/noWorries/left.png"
                 alt="No worries - person focused on work"
@@ -118,20 +135,13 @@ export function NoWorriesSection({}: NoWorriesSectionProps) {
           </div>
 
           {/* Right Content Column */}
-          <div className="lg:w-[60%] flex flex-col justify-between gap-8 py-0 lg:py-12">
+          <div className={`lg:w-[60%] flex flex-col justify-between desktop:p-10 tablet-lg:p-10 tablet:p-10 mobile:p-8 rounded-3xl ${isLightTheme ? 'bg-gray-100' : 'bg-[#0a0a0a]'} `}>
             {/* Top: Badge + Avatars */}
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center desktop:pb-29 tablet-lg:pb-20 tablet:pb-20 mobile:pb-20">
               {/* Badge */}
-              <div
-                ref={badgeRef}
-                className={`px-6 py-2 rounded-full text-sm font-medium ${
-                  isLightTheme
-                    ? 'bg-blue-100 text-blue-700 border border-blue-300'
-                    : 'bg-blue-900/20 text-blue-300 border border-blue-500/30'
-                }`}
-              >
-                ● No worries
-              </div>
+              <BadgeWrapper>
+                 No Worries
+              </BadgeWrapper>
 
               {/* Avatars with text */}
               <div ref={avatarsRef} className="flex flex-col gap-4">
@@ -157,30 +167,25 @@ export function NoWorriesSection({}: NoWorriesSectionProps) {
             </div>
 
             {/* Middle: Content with Images on Right */}
-            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
+            <div className="flex desktop:flex-row tablet-lg:flex-row tablet:flex-row mobile:flex-col gap-8 lg:gap-12 items-center">
               <div className="flex-1">
                 {/* Middle descriptive text */}
-                <div ref={middleTextRef} className={`space-y-4 text-base sm:text-lg leading-relaxed max-w-2xl text-neutral-400 mb-8 ${mutedTextColor}`}>
-                  <p>
-                    The ability to concentrate
-                  </p>
-                  <p> deeply is the ultimate</p>
-                  <p>productivity hack</p>
+                <div ref={middleTextRef} className={`space-y-4 text-base sm:text-lg leading-relaxed max-w-55 text-neutral-400 mb-8 ${mutedTextColor}`}>
+                  <p >
+                    The ability to concentrate deeply is the ultimate productivity hack
+                    </p>
                 </div>
 
                 {/* Bottom heading with character animation */}
                 <div
-                  ref={bottomHeadingRef}
-                  className={`text-4xl md:text-5xl font-bold leading-tight ${textColor}`}
+                  className={`desktop:max-w-sm text-4xl tablet-lg:max-w-sm font-medium leading-tight ${textColor}`}
                 >
-                  <h1>And fortunately it’s</h1>
-                  <h1> a skill you can train</h1>
-                  <h1>& develop.</h1>
+                  <h1>And fortunately it's a skill you can train & develop.</h1>
                 </div>
               </div>
 
               {/* Right - Stacked Images */}
-              <div ref={rightImagesRef} className="hidden lg:flex flex-col gap-4 w-32 flex-shrink-0">
+              <div ref={rightImagesRef} className="flex desktop:flex-col tablet-lg:flex-col tablet:flex-col mobile:flex-row gap-4 desktop:w-32 tablet-lg:w-32 tablet:w-32 mobile:w-full shrink-0">
                 {[1, 2, 3].map((i) => (
                   <div
                     key={i}

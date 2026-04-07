@@ -19,6 +19,8 @@
 
 :root {
   /* Primary (H 220°) */
+  --card-bg: #ffffff;
+  --card-bg: #18181b;
   --primary-50: #e8f0ff;
   --primary-100: #c9dbff;
   --primary-200: #a8c5ff;
@@ -202,6 +204,21 @@ body {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+section[id] {
+  scroll-margin-top: 6.5rem;
+}
+
 /* Navbar gradient border with backdrop blur */
 .navbar-gradient-border {
   border-bottom: 1px solid;
@@ -212,7 +229,8 @@ body {
     rgba(36, 102, 242, 0) 100%
   );
   border-image-slice: 1;
-  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  backdrop-filter: blur(18px) saturate(120%);
 }
 
 .deep-work-gradient-border {

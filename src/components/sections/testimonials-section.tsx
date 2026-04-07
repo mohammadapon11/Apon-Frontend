@@ -1,67 +1,18 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import Image, { type ImageLoader } from "next/image";
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Splide from "@splidejs/splide";
 import "@splidejs/splide/css";
 import { usePageTheme } from "@/providers/theme-context";
-
-type Testimonial = {
-  name: string;
-  role: string;
-  avatar: string;
-  quote: string;
-};
-
-const TESTIMONIALS: Testimonial[] = [
-  {
-    name: "Alex Carter",
-    role: "Freelance Designer",
-    avatar: "https://i.pravatar.cc/80?img=68",
-    quote:
-      "As someone who juggles multiple projects, staying focused was always a challenge. This course gave me the tools to cut through distractions and work with absolute clarity. My productivity has never been better!",
-  },
-  {
-    name: "Mark Davidson",
-    role: "Software Developer",
-    avatar: "https://i.pravatar.cc/80?img=67",
-    quote:
-      "I never realized how much distractions were holding me back. After applying the deep work techniques, I feel more in control of my time and energy. My efficiency has doubled!",
-  },
-  {
-    name: "Sophia Bennett",
-    role: "Marketing Strategist",
-    avatar: "https://i.pravatar.cc/80?img=63",
-    quote:
-      "Deep work used to feel impossible in my routine. The course made everything practical, and now I can consistently finish important tasks without burning out.",
-  },
-];
-
-const VIDEO_TESTIMONIAL = {
-  name: "Daniel Foster",
-  role: "Content Creator",
-  avatar: "https://i.pravatar.cc/80?img=64",
-  thumbnail: "https://images.unsplash.com/photo-1618005182384-7979b4e8a3c3?w=800",
-  quote:
-    "This course completely transformed how I approach deep work. Highly recommended!",
-};
-
-const externalImageLoader: ImageLoader = ({ src }) => src;
 
 const TestimonialsSection = () => {
   const { theme } = usePageTheme();
   const isLightTheme = theme === "light";
   const splideRef = useRef<HTMLDivElement>(null);
-
-  const textColor = isLightTheme ? "text-gray-900" : "text-white";
-  const mutedColor = isLightTheme ? "text-gray-600" : "text-gray-400";
-  const badgeColor = isLightTheme ? "text-blue-700" : "text-blue-300";
-  const sectionBg = isLightTheme ? "bg-white" : "bg-[#0a0a0a]";
-  const cardBg = isLightTheme ? "bg-gray-50" : "bg-neutral-900/50";
-  const cardBorder = isLightTheme ? "border-gray-200" : "border-neutral-800";
-  const arrowBg = isLightTheme ? "bg-white" : "bg-neutral-900";
-  const arrowHoverBg = isLightTheme ? "hover:bg-gray-100" : "hover:bg-neutral-800";
-  const arrowBorder = isLightTheme ? "border-gray-300" : "border-neutral-700";
+  const splideInstanceRef = useRef<Splide | null>(null);
+  const [canGoPrev, setCanGoPrev] = useState(false);
+  const [canGoNext, setCanGoNext] = useState(true);
 
   useEffect(() => {
     if (!splideRef.current) return;
@@ -70,122 +21,232 @@ const TestimonialsSection = () => {
       type: "slide",
       perPage: 3,
       perMove: 1,
-      gap: "2rem",
+      gap: "1.5rem",
       pagination: false,
-      arrows: true,
+      arrows: false,
+      drag: true,
       breakpoints: {
-        1024: { perPage: 2, gap: "1.5rem" },
-        768: { perPage: 1, gap: "1rem" },
+        1200: { perPage: 2, gap: "1rem" },
+        980: { perPage: 1, gap: "1rem" },
       },
     });
 
+    const updateArrowState = () => {
+      const end = splide.Components.Controller.getEnd();
+      setCanGoPrev(splide.index > 0);
+      setCanGoNext(splide.index < end);
+    };
+
     splide.mount();
+    splideInstanceRef.current = splide;
+    updateArrowState();
+
+    splide.on("moved", updateArrowState);
+    splide.on("updated", updateArrowState);
 
     return () => {
+      splideInstanceRef.current = null;
       splide.destroy();
     };
   }, []);
 
+  const sectionBg = isLightTheme ? "bg-white" : "bg-[#05070B]";
+  const headingColor = isLightTheme ? "text-gray-900" : "text-[#D7DCE5]";
+  const cardBg = isLightTheme ? "bg-gray-50" : "bg-[#0B1018]";
+  const cardBorder = isLightTheme ? "border-blue-200" : "border-[#11347C]/85";
+  const bodyColor = isLightTheme ? "text-gray-700" : "text-[#A3ACB8]";
+  const nameColor = isLightTheme ? "text-gray-900" : "text-[#D7DCE5]";
+  const roleColor = isLightTheme ? "text-gray-600" : "text-[#A3ACB8]";
+  const arrowBg = isLightTheme ? "bg-gray-200 hover:bg-gray-300" : "bg-[#121B2A] hover:bg-[#182438]";
+  const arrowIcon = isLightTheme ? "text-gray-800" : "text-[#E8EDF5]";
+
   return (
     <section
-      className={`relative w-full px-6 md:px-12 lg:px-20 py-16 md:py-20 lg:py-24 ${sectionBg}`}
+      id="testimonials"
+      className={`relative w-full overflow-hidden px-6 py-16 md:px-12 md:py-20 lg:px-20 lg:py-24 ${sectionBg}`}
     >
-      <div className="max-w-7xl mx-auto">
-        <div className={`inline-flex items-center gap-2 mb-6 sm:mb-8 ${badgeColor}`}>
-          <span className="w-2 h-2 rounded-full bg-current"></span>
-          <span className="text-sm font-medium">Student Testimonials</span>
-        </div>
-
-        {/* Header */}
-        <div className="flex items-center justify-between mb-12 lg:mb-16">
-          <h2 className={`text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight ${textColor}`}>
-            Join with <span className={isLightTheme ? "text-blue-700" : "text-blue-400"}>5K</span> other students
+      <div className="mx-auto w-full max-w-[1280px]">
+        <div className="relative mb-10 flex items-center justify-between lg:mb-12">
+          <h2 className={`text-[38px] font-medium leading-[1.12] tracking-[-0.02em] sm:text-5xl ${headingColor}`}>
+            Join with 5K other students
           </h2>
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className="splide__arrows hidden items-center gap-3 md:flex">
             <button
-              className={`splide__arrow splide__arrow--prev w-12 h-12 rounded-full flex items-center justify-center transition-colors border ${arrowBg} ${arrowHoverBg} ${arrowBorder} ${textColor}`}
+              className={`splide__arrow splide__arrow--prev !static !left-auto !right-auto !top-auto !translate-y-0 h-[92px] w-[92px] rounded-full border-0 p-0 ${arrowBg} ${arrowIcon}`}
+              type="button"
+              onClick={() => splideInstanceRef.current?.go("<")}
+              disabled={!canGoPrev}
+              aria-label="Previous slide"
+              aria-controls="splide01-track"
             >
-              ←
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 40 40"
+                width="40"
+                height="40"
+                focusable="false"
+                className="mx-auto rotate-0"
+              >
+                <path d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z"></path>
+              </svg>
             </button>
+
             <button
-              className={`splide__arrow splide__arrow--next w-12 h-12 rounded-full flex items-center justify-center transition-colors border ${arrowBg} ${arrowHoverBg} ${arrowBorder} ${textColor}`}
+              className={`splide__arrow splide__arrow--next !static !left-auto !right-auto !top-auto !translate-y-0 h-[92px] w-[92px] rounded-full border-0 p-0 ${arrowBg} ${arrowIcon}`}
+              type="button"
+              onClick={() => splideInstanceRef.current?.go(">")}
+              disabled={!canGoNext}
+              aria-label="Next slide"
+              aria-controls="splide01-track"
             >
-              →
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 40 40"
+                width="40"
+                height="40"
+                focusable="false"
+                className="mx-auto"
+              >
+                <path d="m15.5 0.932-4.3 4.38 14.5 14.6-14.5 14.5 4.3 4.4 14.6-14.6 4.4-4.3-4.4-4.4-14.6-14.6z"></path>
+              </svg>
             </button>
           </div>
         </div>
 
-        {/* Splide Slider */}
-        <div ref={splideRef} className="splide">
-          <div className="splide__track">
+        <div id="splide01" ref={splideRef} className="splide">
+          <div id="splide01-track" className="splide__track">
             <ul className="splide__list">
-              {TESTIMONIALS.map((item) => (
-                <li key={item.name} className="splide__slide">
-                  <div className={`rounded-3xl p-8 h-full flex flex-col border ${cardBg} ${cardBorder}`}>
-                    <div className="mb-6">
-                      <Image
-                        loader={externalImageLoader}
-                        unoptimized
-                        src={item.avatar}
-                        alt={item.name}
-                        width={48}
-                        height={48}
-                        className="w-12 h-12 rounded-full object-cover"
-                      />
-                    </div>
-                    <p className={`text-lg leading-relaxed flex-1 ${mutedColor}`}>{item.quote}</p>
-                    <div className="mt-8">
-                      <p className={`font-semibold ${textColor}`}>{item.name}</p>
-                      <p className={`text-sm ${mutedColor}`}>{item.role}</p>
-                    </div>
-                  </div>
-                </li>
-              ))}
-
-              {/* Center Card with Image + Play Button */}
               <li className="splide__slide">
-                <div className={`relative rounded-3xl overflow-hidden h-full border ${cardBg} ${cardBorder}`}>
-                  <div className="aspect-[16/10] relative">
-                    <Image
-                      loader={externalImageLoader}
-                      unoptimized
-                      src={VIDEO_TESTIMONIAL.thumbnail}
-                      alt={VIDEO_TESTIMONIAL.name}
-                      fill
-                      className="object-cover"
-                    />
-                    {/* Play Button Overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <button
-                        type="button"
-                        aria-label="Play testimonial video"
-                        className="w-20 h-20 bg-white/90 hover:bg-white rounded-full flex items-center justify-center transition-all hover:scale-110 cursor-pointer"
-                      >
-                        <div className="w-0 h-0 border-t-[10px] border-t-transparent border-l-[18px] border-l-black border-b-[10px] border-b-transparent ml-1"></div>
-                      </button>
-                    </div>
-                  </div>
+                <article className={`flex h-full min-h-[520px] flex-col rounded-[34px] border p-9 ${cardBg} ${cardBorder}`}>
+                  <Image
+                    src="/images/testimonials/Avatar 1.png"
+                    alt="Alex Carter"
+                    width={64}
+                    height={64}
+                    className="h-16 w-16 rounded-full object-cover"
+                  />
 
-                  <div className="p-8">
-                    <div className="flex items-center gap-4 mb-6">
-                      <Image
-                        loader={externalImageLoader}
-                        unoptimized
-                        src={VIDEO_TESTIMONIAL.avatar}
-                        alt={VIDEO_TESTIMONIAL.name}
-                        width={40}
-                        height={40}
-                        className="w-10 h-10 rounded-full object-cover"
-                      />
-                      <div>
-                        <p className={`font-semibold ${textColor}`}>{VIDEO_TESTIMONIAL.name}</p>
-                        <p className={`text-sm ${mutedColor}`}>{VIDEO_TESTIMONIAL.role}</p>
-                      </div>
-                    </div>
-                    <p className={`italic ${mutedColor}`}>&ldquo;{VIDEO_TESTIMONIAL.quote}&rdquo;</p>
+                  <p className={`mt-10 text-xl leading-[1.28] ${bodyColor}`}>
+                    As someone who juggles multiple projects, staying focused was always a challenge. This course
+                    gave me the tools to cut through distractions and work with absolute clarity. My productivity has
+                    never been better!
+                  </p>
+
+                  <div className="mt-auto">
+                    <p className={`text-3xl font-medium leading-[1.08] ${nameColor}`}>Alex Carter</p>
+                    <p className={`mt-3 text-2xl leading-[1.2] ${roleColor}`}>Freelance Designer</p>
                   </div>
-                </div>
+                </article>
+              </li>
+
+              <li className="splide__slide">
+                <article className={`relative h-full min-h-[520px] overflow-hidden rounded-[34px] border ${cardBorder}`}>
+                  <Image
+                    src="/images/testimonials/max.png"
+                    alt="Daniel Foster"
+                    fill
+                    className="object-cover"
+                  />
+
+                  <Image
+                    src="/images/testimonials/Avatar 2.png"
+                    alt="Daniel Foster avatar"
+                    width={64}
+                    height={64}
+                    className="absolute left-9 top-9 h-16 w-16 rounded-full object-cover"
+                  />
+
+                  <button
+                    type="button"
+                    aria-label="Play testimonial video"
+                    className="absolute left-1/2 top-1/2 flex h-[104px] w-[104px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-[6px] border-[#CDCED1] bg-[#ECEDEE] transition-transform hover:scale-105"
+                  >
+                    <div className="ml-1 h-0 w-0 border-b-[15px] border-l-[24px] border-t-[15px] border-b-transparent border-l-[#2F6EFF] border-t-transparent" />
+                  </button>
+
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent p-9">
+                    <p className="text-3xl font-medium leading-[1.08] text-white">Daniel Foster</p>
+                    <p className="mt-3 text-2xl leading-[1.2] text-[#E0E4EB]">Content creator</p>
+                  </div>
+                </article>
+              </li>
+
+              <li className="splide__slide">
+                <article className={`flex h-full min-h-[520px] flex-col rounded-[34px] border p-9 ${cardBg} ${cardBorder}`}>
+                  <Image
+                    src="/images/testimonials/Avatar 1.png"
+                    alt="Alex Carter"
+                    width={64}
+                    height={64}
+                    className="h-16 w-16 rounded-full object-cover"
+                  />
+
+                  <p className={`mt-10 text-xl leading-[1.28] ${bodyColor}`}>
+                    As someone who juggles multiple projects, staying focused was always a challenge. This course
+                    gave me the tools to cut through distractions and work with absolute clarity. My productivity has
+                    never been better!
+                  </p>
+
+                  <div className="mt-auto">
+                    <p className={`text-3xl font-medium leading-[1.08] ${nameColor}`}>Alex Carter</p>
+                    <p className={`mt-3 text-2xl leading-[1.2] ${roleColor}`}>Freelance Designer</p>
+                  </div>
+                </article>
+              </li>
+
+              <li className="splide__slide">
+                <article className={`relative h-full min-h-[520px] overflow-hidden rounded-[34px] border ${cardBorder}`}>
+                  <Image
+                    src="/images/testimonials/man.png"
+                    alt="Daniel Foster"
+                    fill
+                    className="object-cover"
+                  />
+
+                  <Image
+                    src="/images/testimonials/Avatar 2.png"
+                    alt="Daniel Foster avatar"
+                    width={64}
+                    height={64}
+                    className="absolute left-9 top-9 h-16 w-16 rounded-full object-cover"
+                  />
+
+                  <button
+                    type="button"
+                    aria-label="Play testimonial video"
+                    className="absolute left-1/2 top-1/2 flex h-[104px] w-[104px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-[6px] border-[#CDCED1] bg-[#ECEDEE] transition-transform hover:scale-105"
+                  >
+                    <div className="ml-1 h-0 w-0 border-b-[15px] border-l-[24px] border-t-[15px] border-b-transparent border-l-[#2F6EFF] border-t-transparent" />
+                  </button>
+
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent p-9">
+                    <p className="text-3xl font-medium leading-[1.08] text-white">Daniel Foster</p>
+                    <p className="mt-3 text-2xl leading-[1.2] text-[#E0E4EB]">Content creator</p>
+                  </div>
+                </article>
+              </li>
+
+              <li className="splide__slide">
+                <article className={`flex h-full min-h-[520px] flex-col rounded-[34px] border p-9 ${cardBg} ${cardBorder}`}>
+                  <Image
+                    src="/images/testimonials/Avatar 3.png"
+                    alt="Mark Davidson"
+                    width={64}
+                    height={64}
+                    className="h-16 w-16 rounded-full object-cover"
+                  />
+
+                  <p className={`mt-10 text-xl leading-[1.28] ${bodyColor}`}>
+                    I never realized how much distractions were holding me back. After applying the deep work
+                    techniques, I feel more in control of my time and energy. My efficiency has doubled!
+                  </p>
+
+                  <div className="mt-auto">
+                    <p className={`text-3xl font-medium leading-[1.08] ${nameColor}`}>Mark Davidson</p>
+                    <p className={`mt-3 text-2xl leading-[1.2] ${roleColor}`}>Software Developer</p>
+                  </div>
+                </article>
               </li>
             </ul>
           </div>

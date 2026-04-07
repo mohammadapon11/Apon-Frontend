@@ -24,7 +24,7 @@ function BadgeWrapper({ children }: { children: React.ReactNode }) {
 export default function Home() {
   const { theme } = usePageTheme();
   return (
-    <>
+    <div className="flex flex-col desktop:gap-40 tablet-lg:gap-32 tablet:gap-28 mobile:gap-24">
       <HeroSection
         badge={<BadgeCountdown isLight={theme === "light"} />}
         heading="Master Focus & Get More Done in Less Time"
@@ -52,12 +52,12 @@ export default function Home() {
           { src: "/images/distruction/3.png", alt: "Person procrastinating" },
         ]}
       />
-      {/* <NoWorriesSection /> */}
-      {/* <DeepWorkBlueprintSection /> */}
-      {/* <CurriculumSection /> */}
-      {/* <TestimonialsSection /> */}
-      {/* <PricingSection /> */}
-      {/* <FinalCtaFooterSection /> */}
-    </>
+      <NoWorriesSection />
+      <DeepWorkBlueprintSection />
+      <CurriculumSection />
+      <TestimonialsSection />
+      <PricingSection />
+      <FinalCtaFooterSection />
+    </div>
   );
 }

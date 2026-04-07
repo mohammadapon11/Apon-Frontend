@@ -28,23 +28,23 @@ export function FinalCtaFooterSection() {
   const footerText = isLightTheme ? 'text-gray-600' : 'text-[#c0c7d2]';
 
   return (
-    <section className={`w-full px-6 py-14 md:px-12 md:py-20 lg:px-20 lg:py-24 ${sectionBg}`}>
-      <div className="mx-auto w-full max-w-[1280px]">
-        <div className="grid grid-cols-1 gap-10 py-4 lg:grid-cols-[1fr_480px] lg:items-center lg:gap-12 lg:py-10">
+    <section className={`w-full px-6 py-14 md:px-12 lg:px-20 ${sectionBg}`}>
+      <div className="mx-auto w-full max-w-7xl">
+        <div className="grid grid-cols-1 gap-10 py-4 lg:grid-cols-[1fr_480px] lg:items-center lg:gap-12 lg:py-10 navbar-gradient-border">
           <div className="max-w-[560px]">
-            <h2 className={`text-5xl font-semibold leading-[1.06] tracking-[-0.03em] sm:text-6xl lg:text-[72px] ${headingColor}`}>
+            <h2 className={`text-5xl font-medium leading-[1.26] tracking-[-0.03em] sm:text-4xl lg:text-5xl ${headingColor}`}>
               The Deep
               <br />
               Work Blueprint
             </h2>
-            <p className={`mt-6 text-xl leading-snug sm:text-2xl lg:text-[44px] ${subtitleColor}`}>
+            <p className={`mt-6 text-xl leading-snug sm:text-lg lg:text-xl ${subtitleColor}`}>
               Master Focus &amp; Get More Done in Less Time
             </p>
           </div>
 
           <Link
             href="#testimonials"
-            className="group block rounded-[34px] bg-[#2f6eff] px-7 pb-8 pt-7 transition-transform duration-300 hover:-translate-y-1"
+            className="group block rounded-[34px] bg-[#2f6eff] px-7 pb-6 pt-7 transition-transform duration-300 hover:-translate-y-1"
           >
             <div className="flex items-start justify-between">
               <div className="flex -space-x-2">
@@ -64,15 +64,15 @@ export function FinalCtaFooterSection() {
                 </svg>
               </span>
             </div>
-            <p className="mt-28 text-4xl font-normal leading-tight text-white sm:text-[40px] lg:text-[52px]">
+            <p className="mt-24 text-4xl font-normal leading-tight text-white sm:text-xl lg:text-2xl">
               Join with 5K other students
             </p>
           </Link>
         </div>
 
-        <div className={`mt-14 border-t pt-8 lg:mt-16 lg:pt-10 ${divider}`}>
+        <div className={`mt-8 pt-8 lg:mt-16 lg:pt-10 ${divider}`}>
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <p className={`text-xl leading-relaxed lg:text-[40px] ${footerText}`}>
+            <p className={`text-xl leading-relaxed ${footerText}`}>
               © Copyright 2024, All Rights Reserved
             </p>
 
@@ -81,7 +81,7 @@ export function FinalCtaFooterSection() {
                 <Link
                   key={item.label}
                   href={item.href}
-                  className={`text-xl leading-relaxed transition-opacity hover:opacity-80 lg:text-[40px] ${footerText}`}
+                  className={`text-xl leading-relaxed transition-opacity hover:opacity-80 ${footerText}`}
                 >
                   {item.label}
                 </Link>

@@ -155,7 +155,7 @@ export function DistractionsSection({
     <section
       ref={containerRef}
       className={cn(
-        "relative w-full overflow-hidden mobile:py-40 tablet:py-40 tablet-lg:py-50 desktop:py-50",
+        "relative w-full overflow-hidden",
         backgroundColor || (isLightTheme ? "bg-neutral-0" : "bg-background")
       )}
     >

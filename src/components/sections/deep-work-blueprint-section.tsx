@@ -14,6 +14,22 @@ import {
     TransferIconLight,
 } from '@/components/icons/deep-work-icons';
 
+function BadgeWrapper({ children }: { children: React.ReactNode }) {
+  const { theme } = usePageTheme();
+  const isLightTheme = theme === "light";
+  return (
+    <div
+      className={`px-4 py-2 flex items-center gap-2 rounded-[12px] text-sm font-medium max-w-55 mx-auto ${
+        isLightTheme
+          ? "bg-blue-100 text-neutral-700 border border-blue-300"
+          : "bg-gray-900 text-neutral-100 border border-blue-500/30"
+      }`}
+    >
+      <div className="h-2 w-2 bg-blue-600 rounded-full"></div>{children}
+    </div>
+  );
+}
+
 interface DeepWorkItem {
     text: string;
 }
@@ -63,30 +79,26 @@ export function DeepWorkBlueprintSection() {
     return (
         <section
             ref={containerRef}
+            id="overview"
             className={`relative w-full px-6 md:px-12 lg:px-20 py-16 md:py-20 lg:py-24 ${isLightTheme ? 'bg-white' : 'bg-[#0a0a0a]'
                 }`}
         >
             <div className="">
                 {/* Badge */}
-                <div
-                    className={`max-w-sm mx-auto text-center px-6 py-2 rounded-full text-sm font-medium ${isLightTheme
-                            ? 'bg-blue-100 text-blue-700 border border-blue-300'
-                            : 'bg-blue-900/20 text-blue-300 border border-blue-500/30'
-                        }`}
-                >
-                    ● The Deep Work Blueprint
-                </div>
+              <BadgeWrapper>
+                 The Deep Work Blueprint
+              </BadgeWrapper>
 
                 {/* Heading */}
-                <h2 className={`text-center text-xl sm:text-2xl lg:text-3xl font-bold leading-tight mt-5 sm:mt-6 lg:mt-10 ${textColor}`}>
-                    A self-paced, results-driven
+                <h2 className={`text-center text-2xl tablet-lg:text-4xl desktop:text-4xl font-medium leading-tight mt-5 tablet:mt-6 desktop:mt-8 max-w-md mx-auto ${textColor}`}>
+                    A self-paced, results-driven course designed to help you
                 </h2>
-                <h2 className={`text-center text-xl sm:text-2xl lg:text-3xl font-bold leading-tight mb-12 sm:mb-16 lg:mb-20 ${textColor}`}>course designed to help you</h2>
+                <h2 className={`text-center text-xl sm:text-2xl lg:text-3xl font-bold leading-tight mb-12 sm:mb-16 lg:mb-20 ${textColor}`}></h2>
 
                 {/* Timeline Items */}
-                <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center pt-40">
                     {/* Timeline Items */}
-                    <div className='flex flex-col lg:gap-14'>
+                    <div className='flex flex-col gap-14'>
                         {DEEP_WORK_ITEMS.map((item, index) => {
                             const IconDark = ICON_COMPONENT_DARK[index];
                             const IconLight = ICON_COMPONENT_LIGHT[index];
@@ -100,7 +112,7 @@ export function DeepWorkBlueprintSection() {
                                     className="relative  items-start gap-6 sm:gap-8 deep-work-gradient-border space-y-8 sm:space-y-12 md:space-y-14 lg:space-y-16 pl-16 sm:pl-20 md:pl-24"
                                 >
                                     {/* Blue dot */}
-                                    <div className={`absolute -left-7 sm:-left-20 md:-left-2 -top-7 w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full ${dotColor} shadow-lg shadow-blue-500/50`} />
+                                    <div className={`absolute -left-2 -top-9 w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full ${dotColor} shadow-lg shadow-blue-500/50`} />
 
                                     {/* Icon container */}
                                     <div
@@ -112,7 +124,7 @@ export function DeepWorkBlueprintSection() {
 
                                     {/* Text content */}
                                     <div className="flex-1 pt-1">
-                                        <p className={`text-base sm:text-lg w-[300px] leading-relaxed ${textColor}`}>
+                                        <p className={`text-base text-[22px] sm:w-75 w-full leading-relaxed ${textColor}`}>
                                             {item.text}
                                         </p>
                                     </div>

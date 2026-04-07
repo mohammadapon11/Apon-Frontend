@@ -26,10 +26,10 @@ export function DesktopNavbar() {
   return (
     <header
       className={cn(
-        "navbar-gradient-border sticky top-0 z-50 hidden w-full transition-colors duration-300 lg:block desktop:px-0 tablet-lg:px-7 tablet:px-5 px-4",
+        "navbar-gradient-border sticky top-0 z-50 hidden w-full backdrop-blur-xl supports-backdrop-filter:backdrop-blur-xl:backdrop-blur-xl transition-colors duration-300 lg:block desktop:px-0 tablet-lg:px-7 tablet:px-5 px-4",
         isLightBar
-          ? "bg-neutral-0 text-neutral-900"
-          : "bg-[#0a0a0a] text-neutral-0",
+          ? "bg-neutral-0/70 text-neutral-900"
+          : "bg-[#0a0a0a]/65 text-neutral-0",
       )}
     >
       <div className="mx-auto flex lg:py-6 max-w-7xl items-center justify-between">
