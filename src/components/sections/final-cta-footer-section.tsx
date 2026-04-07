@@ -12,9 +12,9 @@ const FOOTER_LINKS = [
 ];
 
 const AVATARS = [
-  { src: '/images/review/Avatar 1.png', alt: 'Student avatar 1' },
-  { src: '/images/review/Avatar 2.png', alt: 'Student avatar 2' },
-  { src: '/images/review/Avatar 3.png', alt: 'Student avatar 3' },
+  { src: '/images/testimonials/Avatar 1.png', alt: 'Student avatar 1' },
+  { src: '/images/testimonials/Avatar 2.png', alt: 'Student avatar 2' },
+  { src: '/images/testimonials/Avatar 3.png', alt: 'Student avatar 3' },
 ];
 
 export function FinalCtaFooterSection() {
