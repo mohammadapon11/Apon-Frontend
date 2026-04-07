@@ -6,3 +6,5 @@ export { NoWorriesSection } from "./no-worries-section";
 export { DeepWorkBlueprintSection } from "./deep-work-blueprint-section";
 export { CurriculumSection } from "./curriculum-section";
 export { TestimonialsSection } from "./testimonials-section";
+export { PricingSection } from "./pricing-section";
+export { FinalCtaFooterSection } from "./final-cta-footer-section";

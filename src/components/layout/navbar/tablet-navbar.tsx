@@ -209,7 +209,7 @@ export function TabletNavbar() {
                   href={href}
                   onClick={handleMenuItemClick}
                   className={cn(
-                    "block px-6 py-4 text-lg font-medium transition-colors",
+                    "font-base block px-6 py-4 font-normal tracking-normal transition-colors",
                     isLightBar
                       ? "hover:bg-neutral-50"
                       : "hover:bg-neutral-900/50",
@@ -242,7 +242,7 @@ export function TabletNavbar() {
               variant="primary"
               size="md"
               className={cn(
-                "w-full rounded-full text-body-sm",
+                "w-full rounded-full text-body-sm !text-white hover:!text-white active:!text-white",
                 isLightBar
                   ? "focus-visible:ring-offset-white"
                   : "focus-visible:ring-offset-black",

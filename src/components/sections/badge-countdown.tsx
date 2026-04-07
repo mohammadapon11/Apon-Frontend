@@ -62,11 +62,11 @@ export function BadgeCountdown({
     return (
       <div
         className={cn(
-          "inline-flex items-center gap-2 rounded-full border border-primary-500/30 bg-primary-500/10 px-4 py-2 backdrop-blur-sm",
+          "inline-flex items-center gap-2 rounded-3 border border-primary-500/30 bg-primary-500/10 px-4 py-2 backdrop-blur-sm",
           className
         )}
       >
-        <span className="h-2 w-2 rounded-full bg-primary-500 animate-pulse" />
+        <span className="h-2 w-2 rounded-3 bg-primary-500 animate-pulse" />
         <span className={cn("text-sm font-medium", isLight ? "text-neutral-900" : "text-neutral-0")}>
           30% off until {daysFromNow}d: 00h : 00m : 00s
         </span>
@@ -77,7 +77,7 @@ export function BadgeCountdown({
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-2 rounded-full border border-primary-500/30 bg-primary-500/10 px-4 py-2 backdrop-blur-sm",
+        "inline-flex items-center gap-2 rounded-[12px] border border-primary-500/30 bg-primary-500/10 px-4 py-2 backdrop-blur-sm",
         className
       )}
     >

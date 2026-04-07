@@ -68,7 +68,7 @@ export function NavbarThemeToggle({
   return (
     <div
       className={cn(
-        "relative flex h-10 w-[4.5rem] shrink-0 items-center rounded-pill p-1",
+        "relative flex gap-2 h-10 w-18 shrink-0 items-center justify-between rounded-pill p-1",
         isLightBar ? "bg-neutral-200" : "bg-[#1a1a1a]",
       )}
       role="group"
@@ -93,7 +93,7 @@ export function NavbarThemeToggle({
           pulseIcon(e.currentTarget);
         }}
         className={cn(
-          "relative z-10 flex size-8 cursor-pointer items-center justify-center rounded-full outline-none",
+          "relative z-10 order-1 flex size-8 cursor-pointer items-center justify-center rounded-full outline-none",
           "transition-colors active:scale-95",
           "focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2",
           isLightBar
@@ -101,10 +101,11 @@ export function NavbarThemeToggle({
             : "text-neutral-0 hover:bg-white/5 focus-visible:ring-offset-black",
         )}
       >
+
         {isLightBar ? (
-          <ThemeMoonIconLightBar className="size-4" />
+          <ThemeSunIconLightBar className="size-5" />
         ) : (
-          <ThemeMoonIcon className="size-3.5" />
+          <ThemeSunIcon className="size-4.5" />
         )}
       </button>
       <button
@@ -116,7 +117,7 @@ export function NavbarThemeToggle({
           pulseIcon(e.currentTarget);
         }}
         className={cn(
-          "relative z-10 flex size-8 cursor-pointer items-center justify-center rounded-full outline-none",
+          "relative z-10 order-2 flex size-8 cursor-pointer items-center justify-center rounded-full outline-none",
           "transition-colors active:scale-95",
           "focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2",
           isLightBar
@@ -125,9 +126,9 @@ export function NavbarThemeToggle({
         )}
       >
         {isLightBar ? (
-          <ThemeSunIconLightBar className="size-5" />
+          <ThemeMoonIconLightBar className="size-4" />
         ) : (
-          <ThemeSunIcon className="size-[17px]" />
+          <ThemeMoonIcon className="size-3.5" />
         )}
       </button>
     </div>

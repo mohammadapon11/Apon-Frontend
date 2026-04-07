@@ -26,14 +26,14 @@ export function DesktopNavbar() {
   return (
     <header
       className={cn(
-        "navbar-gradient-border sticky top-0 z-50 hidden w-full transition-colors duration-300 lg:block",
+        "navbar-gradient-border sticky top-0 z-50 hidden w-full transition-colors duration-300 lg:block desktop:px-0 tablet-lg:px-7 tablet:px-5 px-4",
         isLightBar
           ? "bg-neutral-0 text-neutral-900"
           : "bg-[#0a0a0a] text-neutral-0",
       )}
     >
-      <div className="relative mx-auto flex h-[4.5rem] max-w-[1280px] items-center px-6 xl:px-8">
-        <div className="flex flex-1 justify-start">
+      <div className="mx-auto flex lg:py-6 max-w-7xl items-center justify-between">
+        <div className="">
           <Link
             href="/"
             className={cn(
@@ -63,7 +63,7 @@ export function DesktopNavbar() {
           </ul>
         </nav>
 
-        <div className="relative z-[2] flex flex-1 items-center justify-end gap-4">
+        <div className="flex lg:gap-8">
           <NavbarThemeToggle
             theme={theme}
             onThemeChange={setTheme}
@@ -73,7 +73,7 @@ export function DesktopNavbar() {
             variant="primary"
             size="md"
             className={cn(
-              "rounded-full px-6 text-body-sm",
+              "rounded-full px-6 text-body-sm !text-white hover:!text-white active:!text-white",
               isLightBar
                 ? "focus-visible:ring-offset-white"
                 : "focus-visible:ring-offset-black",

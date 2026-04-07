@@ -1,6 +1,18 @@
 @import "tailwindcss";
 
 /*
+  Custom responsive variants (Figma ranges):
+  - desktop: 981px to 1920px
+  - tablet-lg: 681px to 980px
+  - tablet: 581px to 680px
+  - mobile: 520px and below
+*/
+@custom-variant desktop (@media (min-width: 981px) and (max-width: 1920px));
+@custom-variant tablet-lg (@media (min-width: 681px) and (max-width: 980px));
+@custom-variant tablet (@media (min-width: 581px) and (max-width: 680px));
+@custom-variant mobile (@media (max-width: 520px));
+
+/*
   Design tokens — Figma COLOR STYLES + TYPE STYLES + COMPONENTS (LMS / Apon-Frontend).
   HSB → sRGB hex per Figma. Default theme matches dark UI from components frame.
 */
@@ -97,6 +109,17 @@
 }
 
 @theme inline {
+  /* Override default Tailwind breakpoints */
+  --breakpoint-sm: 581px;
+  --breakpoint-md: 681px;
+  --breakpoint-lg: 981px;
+  --breakpoint-xl: 1920px;
+
+  /* Min-width breakpoints for optional usage */
+  --breakpoint-tablet: 581px;
+  --breakpoint-tablet-lg: 681px;
+  --breakpoint-desktop: 981px;
+
   --color-primary-50: var(--primary-50);
   --color-primary-100: var(--primary-100);
   --color-primary-200: var(--primary-200);

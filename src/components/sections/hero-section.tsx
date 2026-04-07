@@ -7,7 +7,6 @@ import gsap from "gsap";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { BadgeCountdown } from "./badge-countdown";
 import { PlayButtonIcon } from "./play-button-icon";
 
 /**
@@ -21,6 +20,7 @@ interface HeroSectionProps {
   imageSrc: string;
   imageAlt: string;
   backgroundImage?: string;
+  previewVideoUrl?: string;
   onPlayClick?: () => void;
   showBadge?: boolean;
 }
@@ -40,6 +40,7 @@ export function HeroSection({
   imageSrc,
   imageAlt,
   backgroundImage = "url(/images/hero/Bg-Gradient.png)",
+  previewVideoUrl = "https://www.youtube.com/embed/oPVte6aMprI?autoplay=1&rel=0",
   onPlayClick,
   showBadge = true,
 }: HeroSectionProps) {
@@ -52,7 +53,7 @@ export function HeroSection({
   const ctaRef = useRef<HTMLDivElement>(null);
   const imageBorderRef = useRef<HTMLDivElement>(null);
   const borderGradientRef = useRef<HTMLDivElement>(null);
-  const [isHovering, setIsHovering] = useState(false);
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
 
   // Entrance animations
   useEffect(() => {
@@ -122,40 +123,37 @@ export function HeroSection({
     );
   }, []);
 
-  // Play button hover animation
-  const handlePlayButtonHover = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (isHovering) return;
-    setIsHovering(true);
+  useEffect(() => {
+    if (!isVideoOpen) return;
 
-    const button = e.currentTarget;
-    gsap.to(button, {
-      scale: 1.15,
-      duration: 0.3,
-      ease: "power2.out",
-      onComplete: () => setIsHovering(false),
-    });
-  };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsVideoOpen(false);
+      }
+    };
 
-  const handlePlayButtonUnhover = (e: React.MouseEvent<HTMLButtonElement>) => {
-    gsap.to(e.currentTarget, {
-      scale: 1,
-      duration: 0.3,
-      ease: "power2.out",
-    });
-  };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isVideoOpen]);
 
   return (
     <section
       ref={containerRef}
-      className="relative w-full overflow-hidden py-16 sm:py-20 md:py-24 lg:py-32"
+      className="relative w-full overflow-hidden desktop:pt-45 tablet-lg:pt-45 tablet:pt-32 pt-24"
       style={{
         backgroundImage: backgroundImage,
         backgroundSize: "cover",
       }}
     >
-      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Centered content */}
-        <div className="flex flex-col items-center text-center gap-8">
+        <div className="flex flex-col items-center text-center gap-6">
           {/* Badge */}
           {showBadge && badge && (
             <div ref={badgeRef} className="w-fit">
@@ -167,7 +165,7 @@ export function HeroSection({
           <h1
             ref={headingRef}
             className={cn(
-              "font-sans text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight tracking-tight max-w-5xl",
+              "font-sans tablet-lg:text-[52px] tablet:text-[40px] text-[36px] font-medium tracking-tight max-w-lg",
               isLightTheme
                 ? "text-neutral-900"
                 : "text-neutral-0"
@@ -180,7 +178,7 @@ export function HeroSection({
           <p
             ref={subtitleRef}
             className={cn(
-              "text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-8",
+              "text-base sm:text-lg leading-relaxed max-w-lg mx-auto mb-8",
               isLightTheme
                 ? "text-neutral-600"
                 : "text-neutral-300"
@@ -191,13 +189,13 @@ export function HeroSection({
 
           {/* CTA Buttons */}
           {ctaButtons.length > 0 && (
-            <div ref={ctaRef} className="flex flex-col sm:flex-row gap-4 items-center justify-center pt-4">
+            <div ref={ctaRef} className="flex gap-4 items-center justify-center">
               {ctaButtons.map((btn) => (
                 <Button
                   key={btn.href}
                   variant={btn.variant}
                   size="lg"
-                  className="rounded-full px-8 text-base font-semibold min-w-fit"
+                  className={`rounded-full px-6 text-base font-semibold min-w-fit ${btn.variant === "primary" && "text-white"} ${btn.variant === "secondary" && (isLightTheme ? "bg-gray-200 text-gray-900" : "text-neutral-0")}`}
                   asChild
                 >
                   <Link href={btn.href}>{btn.label}</Link>
@@ -209,7 +207,7 @@ export function HeroSection({
           {/* Hero image with animated gradient border */}
           <div
             ref={imageBorderRef}
-            className="w-full max-w-[1280px] mt-12 lg:mt-16 relative"
+            className="w-full max-w-7xl mt-12 lg:mt-16 relative"
             style={{
               aspectRatio: "901 / 507.24",
             }}
@@ -241,25 +239,63 @@ export function HeroSection({
               {/* Play button overlay */}
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/20 hover:bg-black/30 transition-colors">
                 <button
-                  onClick={onPlayClick || (() => console.log("Play video"))}
-                  onMouseEnter={handlePlayButtonHover}
-                  onMouseLeave={handlePlayButtonUnhover}
+                  type="button"
+                  onClick={() => {
+                    onPlayClick?.();
+                    setIsVideoOpen(true);
+                  }}
                   className={cn(
-                    "relative z-10 flex h-20 w-20 items-center justify-center rounded-full mb-6",
-                    "bg-white/95 hover:bg-white transition-colors",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-2",
-                    isLightTheme ? "focus-visible:ring-offset-white" : "focus-visible:ring-offset-black"
-                  )}
+                    "relative z-10 flex tablet:h-24 tablet:w-24 w-20 h-20 items-center justify-center cursor-pointer rounded-full mb-6",
+                    "bg-white hover:bg-gray-100 transition-colors",
+                    "border-6 border-gray-300")}
                   aria-label="Play video"
                   title="Play course preview"
                 >
-                  <PlayButtonIcon className="w-6 h-7" />
+                  <PlayButtonIcon className="tablet:w-6 tablet:h-7 w-4 h-5" />
                 </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {isVideoOpen && (
+        <div
+          className="fixed inset-0 z-[90] flex items-center justify-center bg-black/80 px-4"
+          onClick={() => setIsVideoOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Course preview video"
+        >
+          <div
+            className="relative w-full max-w-4xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setIsVideoOpen(false)}
+              className="absolute -top-12 right-0 text-white transition-opacity hover:opacity-80"
+              aria-label="Close video popup"
+            >
+              <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+
+            <div className="relative w-full overflow-hidden rounded-xl bg-black" style={{ paddingBottom: "56.25%" }}>
+              <iframe
+                className="absolute inset-0 h-full w-full"
+                src={previewVideoUrl}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

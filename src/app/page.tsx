@@ -1,8 +1,9 @@
 'use client';
 
-import { DistractionsSection, HeroSection, NoWorriesSection, DeepWorkBlueprintSection, CurriculumSection, TestimonialsSection } from "@/components/sections";
+import { DistractionsSection, HeroSection, NoWorriesSection, DeepWorkBlueprintSection, CurriculumSection, TestimonialsSection, PricingSection, FinalCtaFooterSection } from "@/components/sections";
 import { BadgeCountdown } from "@/components/sections/badge-countdown";
 import { usePageTheme } from "@/providers/theme-context";
+import '@splidejs/react-splide/css';
 
 function BadgeWrapper({ children }: { children: React.ReactNode }) {
   const { theme } = usePageTheme();
@@ -21,10 +22,11 @@ function BadgeWrapper({ children }: { children: React.ReactNode }) {
 }
 
 export default function Home() {
+  const { theme } = usePageTheme();
   return (
     <>
       <HeroSection
-        badge={<BadgeCountdown isLight={false} />}
+        badge={<BadgeCountdown isLight={theme === "light"} />}
         heading="Master Focus & Get More Done in Less Time"
         subtitle="A step-by-step system to eliminate procrastination, train your brain for deep work, and boost productivity effortlessly."
         ctaButtons={[
@@ -36,7 +38,7 @@ export default function Home() {
         backgroundImage="url(/images/hero/Bg-Gradient.png)"
         showBadge={true}
       />
-      <DistractionsSection
+      {/* <DistractionsSection
         badge={
           <BadgeWrapper>
             ● Are Distractions Holding You Back?
@@ -49,11 +51,13 @@ export default function Home() {
           { src: "/images/distruction/2.png", alt: "Person feeling overwhelmed" },
           { src: "/images/distruction/3.png", alt: "Person procrastinating" },
         ]}
-      />
-      <NoWorriesSection />
-      <DeepWorkBlueprintSection />
-      <CurriculumSection />
-      <TestimonialsSection />
+      /> */}
+      {/* <NoWorriesSection /> */}
+      {/* <DeepWorkBlueprintSection /> */}
+      {/* <CurriculumSection /> */}
+      {/* <TestimonialsSection /> */}
+      {/* <PricingSection /> */}
+      {/* <FinalCtaFooterSection /> */}
     </>
   );
 }
