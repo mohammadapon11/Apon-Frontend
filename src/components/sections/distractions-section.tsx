@@ -155,13 +155,13 @@ export function DistractionsSection({
     <section
       ref={containerRef}
       className={cn(
-        "relative w-full overflow-hidden py-16 sm:py-20 md:py-24 lg:py-32",
+        "relative w-full overflow-hidden mobile:py-40 tablet:py-40 tablet-lg:py-50 desktop:py-50",
         backgroundColor || (isLightTheme ? "bg-neutral-0" : "bg-background")
       )}
     >
-      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Centered content */}
-        <div className="flex flex-col items-center text-center gap-8">
+        <div className="flex flex-col items-center text-center gap-10">
           {/* Badge */}
           {badge && (
             <div ref={badgeRef} className="w-fit">
@@ -173,7 +173,7 @@ export function DistractionsSection({
           <h2
             ref={headingRef}
             className={cn(
-              "font-sans text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight max-w-4xl",
+              "font-sans desktop:text-[56px] tablet-lg:text-5xl tablet:text-4xl mobile:text-4xl font-normal leading-tight tracking-tight desktop:max-w-4xl tablet-lg:max-w-xl",
               headingClassName ||
                 (isLightTheme
                   ? "text-neutral-900"
@@ -183,24 +183,11 @@ export function DistractionsSection({
             {heading}
           </h2>
 
-          {/* Subtitle */}
-          <p
-            ref={subtitleRef}
-            className={cn(
-              "text-base sm:text-lg leading-relaxed max-w-2xl",
-              isLightTheme
-                ? "text-neutral-600"
-                : "text-neutral-400"
-            )}
-          >
-            {subtitle}
-          </p>
-
           {/* Images Grid */}
           {images.length > 0 && (
             <div
               ref={imagesContainerRef}
-              className="flex flex-wrap justify-center gap-6 pt-8"
+              className="flex flex-wrap justify-center gap-2 pt-8"
             >
               {images.map((img, idx) => (
                 <div

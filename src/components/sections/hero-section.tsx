@@ -165,7 +165,7 @@ export function HeroSection({
           <h1
             ref={headingRef}
             className={cn(
-              "font-sans tablet-lg:text-[52px] tablet:text-[40px] text-[36px] font-medium tracking-tight max-w-lg",
+              "font-sans desktop:text-[52px] tablet-lg:text-[52px] tablet:text-[40px] text-[36px] font-medium tracking-tight max-w-lg",
               isLightTheme
                 ? "text-neutral-900"
                 : "text-neutral-0"
@@ -245,13 +245,13 @@ export function HeroSection({
                     setIsVideoOpen(true);
                   }}
                   className={cn(
-                    "relative z-10 flex tablet:h-24 tablet:w-24 w-20 h-20 items-center justify-center cursor-pointer rounded-full mb-6",
+                    "relative z-10 flex desktop:h-24 desktop:w-24 tablet-lg:w-24 tablet-lg:h-24 tablet:h-24 tablet:w-24 w-20 h-20 items-center justify-center cursor-pointer rounded-full mb-6",
                     "bg-white hover:bg-gray-100 transition-colors",
                     "border-6 border-gray-300")}
                   aria-label="Play video"
                   title="Play course preview"
                 >
-                  <PlayButtonIcon className="tablet:w-6 tablet:h-7 w-4 h-5" />
+                  <PlayButtonIcon className=" desktop:w-6 desktop:h-7 tablet-lg:w-6 tablet-lg:h-7 tablet:w-6 tablet:h-7 w-4 h-5" />
                 </button>
               </div>
             </div>

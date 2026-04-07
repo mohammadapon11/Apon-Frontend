@@ -77,12 +77,14 @@ export function BadgeCountdown({
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-2 rounded-[12px] border border-primary-500/30 bg-primary-500/10 px-4 py-2 backdrop-blur-sm",
-        className
+        "inline-flex items-center gap-2 rounded-[12px] border border-primary-500/30  px-4 py-2 backdrop-blur-sm",
+        className, isLight
+          ? "bg-primary-500/10 text-neutral-900"
+          : "bg-gray-900 text-neutral-100"
       )}
     >
       <span className="h-2 w-2 rounded-full bg-primary-500 animate-pulse" />
-      <span className={cn("text-sm font-medium", isLight ? "text-neutral-900" : "text-neutral-0")}>
+      <span className={cn("text-sm font-medium", isLight ? "text-neutral-900" : "text-neutral-100")}>
         30% off until {timeLeft.days}d: {String(timeLeft.hours).padStart(2, "0")}h : {String(timeLeft.minutes).padStart(2, "0")}m : {String(timeLeft.seconds).padStart(2, "0")}s
       </span>
     </div>
